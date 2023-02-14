@@ -22,3 +22,4 @@ class Sentence:
             yield match.group()  # <3>
 
 # end::SENTENCE_GEN2[]
+

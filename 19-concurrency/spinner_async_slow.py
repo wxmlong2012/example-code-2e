@@ -9,18 +9,21 @@ import asyncio
 import itertools
 import time
 
+
 async def spin(msg: str) -> None:  # <1>
+    print("start spinning")
     for char in itertools.cycle(r'\|/-'):
-        status = f'\r{char} {msg}'
-        print(status, flush=True, end='')
+        status = f'{char} {msg}'
+        print(status)
         try:
-            await asyncio.sleep(.1)  # <2>
+            await asyncio.sleep(0.5)  # <2>
         except asyncio.CancelledError:  # <3>
+            print("spinner will be broken ...")
             break
     blanks = ' ' * len(status)
     print(f'\r{blanks}\r', end='')
-
 async def slow() -> int:
+    print("start slow process")
     await asyncio.sleep(3)  # <4>
     return 42
 # end::SPINNER_ASYNC_TOP[]
@@ -34,7 +37,13 @@ async def supervisor() -> int:  # <3>
     spinner = asyncio.create_task(spin('thinking!'))  # <4>
     print(f'spinner object: {spinner}')  # <5>
     result = await slow()  # <6>
-    spinner.cancel()  # <7>
+
+    print("0.8 wait starts")
+    await asyncio.sleep(0.8)
+    print("0.8 wait ends")
+    print("start cancel spinning")
+    spinner.cancel() # <7>
+
     return result
 
 if __name__ == '__main__':

@@ -20,13 +20,15 @@ async def spin(msg: str) -> None:
 
 # tag::SPINNER_ASYNC_EXPERIMENT[]
 async def slow() -> int:
+    print("start waiting")
     time.sleep(3)  # <4>
     return 42
 
 async def supervisor() -> int:
     spinner = asyncio.create_task(spin('thinking!'))  # <1>
     print(f'spinner object: {spinner}')  # <2>
-    result = await slow()  # <3>
+    result = await slow()  # <3>\
+    print("End waiting")
     spinner.cancel()  # <5>
     return result
 # end::SPINNER_ASYNC_EXPERIMENT[]
