@@ -20,10 +20,10 @@ def loiter(n):  # <2>
 def main():
     display('Script starting.')
     executor = futures.ThreadPoolExecutor(max_workers=3)  # <4>
-    results = executor.map(loiter, range(5))  # <5>
+    results = executor.map(loiter, range(5, 0, -1))  # <5>
     display('results:', results)  # <6>
     display('Waiting for individual results:')
-    for i, result in enumerate(results):  # <7>
+    for i, result in enumerate(results,1):  # <7>
         display(f'result {i}: {result}')
 
 if __name__ == '__main__':
